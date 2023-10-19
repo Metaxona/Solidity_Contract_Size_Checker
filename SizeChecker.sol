@@ -11,7 +11,10 @@ contract SizeChecker {
     }
 
     function hasExceededMax(address contractAddress) public view returns(bool, uint spaceLeft){
-        return (checkContractSize(contractAddress) > 24576, 24576 - checkContractSize(contractAddress));
+        unchecked {
+            spaceLeft = (checkContractSize(contractAddress) > 24576, 24576 - checkContractSize(contractAddress));
+        }
+        return spaceLeft;
     }
 
 }
